@@ -1,176 +1,295 @@
-# 3D Portfolio Website
+<div align="center">
 
-This repository contains the source code for a personal 3D portfolio built with React, TypeScript, Three.js, React Three Fiber, and GSAP. It includes animated page sections, a character scene, custom cursor interactions, and smooth transitions designed for a modern portfolio experience.
+<h1>3D Portfolio</h1>
 
-Live site: [https://akashrmalhotra.netlify.app/](https://akashrmalhotra.netlify.app/)
+<p><strong>Interactive 3D portfolio with physics, scroll animations, and an encrypted character model.</strong></p>
 
-![Portfolio Preview](public/images/preview1.png)
+[![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
+[![React](https://img.shields.io/badge/React-18.3-61dafb?logo=react)](https://react.dev)
+[![TypeScript](https://img.shields.io/badge/TypeScript-5.5-3178c6?logo=typescript)](https://www.typescriptlang.org)
+[![Three.js](https://img.shields.io/badge/Three.js-r168-000000?logo=three.js)](https://threejs.org)
+[![Vite](https://img.shields.io/badge/Vite-5.4-646cff?logo=vite)](https://vitejs.dev)
+[![Deploy Status](https://img.shields.io/badge/GitHub_Pages-live-brightgreen?logo=github)](https://vansh281999.github.io/web_portfolio_v2/)
 
-## Table of Contents
+</div>
 
-- [Features](#features)
-- [Tech Stack](#tech-stack)
-- [Project Structure](#project-structure)
-- [Getting Started](#getting-started)
-- [Available Scripts](#available-scripts)
-- [GSAP License Note](#gsap-license-note)
-- [Customization Guide](#customization-guide)
-- [Troubleshooting](#troubleshooting)
-- [Deployment](#deployment)
-- [License](#license)
+---
 
-## Features
+# Live Demo
 
-- Responsive one-page portfolio layout with reusable section components.
-- 3D character scene rendering powered by React Three Fiber and Three.js.
-- GSAP-powered animations and transitions for interactive storytelling.
-- Custom cursor, hover interactions, and scroll-driven visual effects.
-- Organized component architecture with dedicated utilities and style modules.
+- 🌐 **Website:** [https://vansh281999.github.io/web_portfolio_v2/](https://vansh281999.github.io/web_portfolio_v2/)
+- 🖥️ **Repository:** [https://github.com/Vansh281999/web_portfolio_v2](https://github.com/Vansh281999/web_portfolio_v2)
 
-## Tech Stack
+---
 
-### Core
+# Overview
 
-- React 18
-- TypeScript
-- Vite
+A **production-grade, interactive portfolio website** built for [Vansh Mahajan](https://github.com/Vansh281999), showcasing projects in Computer Vision, ML, and Full-Stack Development.
 
-### Animation and 3D
+**Design goals:**
+- Immersive 3D presence without sacrificing performance
+- Scroll-driven narrative that feels like a guided tour
+- Zero external API dependencies — ships as a static bundle
+- Recruiter-friendly presentation of skills, experience, and projects
 
-- GSAP + `@gsap/react`
-- Three.js
-- `@react-three/fiber`
-- `@react-three/drei`
-- `@react-three/postprocessing`
-- `@react-three/cannon`
-- `@react-three/rapier`
+---
 
-### Supporting Libraries
+# Features
 
-- `react-icons`
-- `react-fast-marquee`
-- `@vercel/analytics`
+| Category | Details |
+|----------|---------|
+| **3D Character** | Interactive character with mouse-driven head rotation, eyebrow hover, typing animation, and blinking. |
+| **Encrypted Model** | GLB model AES-256 encrypted at rest (`character.enc`), decrypted client-side before rendering. |
+| **Physics TechStack** | 30 spheres with technology textures, collision physics via `@react-three/rapier`, and N8AO post-processing. |
+| **Scroll Animations** | GSAP `ScrollTrigger` + `SplitText` for character/camera transitions and text reveals. |
+| **Custom Cursor** | Smooth-following cursor with state-aware hover effects. |
+| **Project Carousel** | Drag-to-navigate carousel with velocity threshold and touch support. |
+| **Loading Screen** | Animated loading sequence with marquee text and progress simulation. |
+| **Career Timeline** | Vertical timeline with scroll-triggered dot indicator. |
+| **Responsive** | Adaptive layouts from 375px mobile to 1950px+ ultrawide. 3D canvas hidden below 1024px. |
+| **Static Export** | Zero-config deploy to Vercel, Netlify, or GitHub Pages. |
 
-## Project Structure
+---
 
-```text
+# Tech Stack
+
+<div align="center">
+
+| Frontend | 3D & Graphics | Animation | Styling | Build |
+|----------|---------------|-----------|---------|-------|
+| [React 18](https://react.dev) | [Three.js r168](https://threejs.org) | [GSAP 3.12](https://gsap.com) | Plain CSS | [Vite 5.4](https://vitejs.dev) |
+| [TypeScript 5.5](https://www.typescriptlang.org) | [@react-three/fiber](https://docs.pmnd.rs/react-three-fiber) | [@gsap/react](https://gsap.com) | CSS Variables | [esbuild](https://esbuild.github.io) |
+| | [@react-three/drei](https://docs.pmnd.rs/drei) | [react-fast-marquee](https://www.npmjs.com/package/react-fast-marquee) | | |
+| | [@react-three/rapier](https://docs.pmnd.rs/rapier) | | | |
+| | [@react-three/postprocessing](https://docs.pmnd.rs/postprocessing) | | | |
+| | [three-stdlib](https://github.com/mrdoob/three.js/tree/dev/examples/jsm) | | | |
+
+**Icons:** [react-icons](https://react-icons.github.io/react-icons/) &nbsp;|&nbsp; **Analytics:** [@vercel/analytics](https://vercel.com/docs/concepts/analytics)
+
+</div>
+
+---
+
+# Project Structure
+
+```
 .
-├── public/                    # Static assets
+├── public/
+│   ├── Vansh_Mahajan_Resume.pdf
+│   ├── images/                     # Tech logos, project screenshots
+│   ├── models/
+│   │   ├── character.enc           # AES-256 encrypted GLB
+│   │   ├── char_enviorment.hdr     # HDR environment map
+│   │   └── encrypt.cjs             # Encryption script
+│   └── draco/                      # DRACO decoder binaries
 ├── src/
-│   ├── assets/                # Local media/assets
 │   ├── components/
-│   │   ├── Character/         # 3D scene + character logic/utilities
-│   │   ├── styles/            # Section/component CSS files
-│   │   ├── About.tsx
-│   │   ├── Career.tsx
+│   │   ├── Character/              # 3D scene, GLTF loading, lighting, animations
+│   │   │   └── utils/
+│   │   │       ├── character.ts    # DRACO + decrypt pipeline
+│   │   │       ├── lighting.ts     # HDR environment + lights
+│   │   │       ├── animationUtils.ts
+│   │   │       ├── mouseUtils.ts
+│   │   │       └── resizeUtils.ts
+│   │   ├── styles/                 # Per-component CSS
+│   │   ├── utils/                  # GSAP scroll/text utilities
+│   │   ├── context/
+│   │   │   └── LoadingProvider.tsx # Global loading state
+│   │   ├── Landing.tsx             # Hero section
+│   │   ├── About.tsx               # Bio
+│   │   ├── WhatIDo.tsx             # Service cards
+│   │   ├── Career.tsx              # Experience timeline
+│   │   ├── Work.tsx                # Project carousel
+│   │   ├── TechStack.tsx           # 3D physics spheres
 │   │   ├── Contact.tsx
-│   │   ├── Landing.tsx
-│   │   ├── MainContainer.tsx  # Main page composition
 │   │   ├── Navbar.tsx
-│   │   ├── TechStack.tsx
-│   │   ├── WhatIDo.tsx
-│   │   └── Work.tsx
-│   ├── context/               # Global providers (loading state, etc.)
-│   ├── data/                  # Static data/content definitions
+│   │   ├── Cursor.tsx
+│   │   └── SocialIcons.tsx
+│   ├── data/
+│   │   └── boneData.ts             # Animation bone mappings
 │   ├── App.tsx
-│   └── main.tsx
+│   ├── main.tsx
+│   └── index.css                   # Global variables + reset
+├── .github/workflows/
+│   └── deploy.yml                  # GitHub Pages CI
 ├── package.json
-└── vite.config.ts
+├── tsconfig.json
+├── vite.config.ts
+└── vercel.json / netlify.toml      # Platform configs
 ```
 
-## Getting Started
+<details>
+<summary><strong>Architecture highlights</strong></summary>
+
+- `MainContainer` composes sections and manages `ScrollTrigger` layout animations.
+- `LoadingProvider` gates the app until 3D assets and fonts are ready.
+- `TechStack` uses `Environment` + `EffectComposer` + `Physics` for a performant interactive scene.
+- `Works` carousel uses pointer events with velocity-based swipe detection.
+- All asset paths resolve through `import.meta.env.BASE_URL` for subpath-safe deployments.
+
+</details>
+
+---
+
+# Getting Started
 
 ### Prerequisites
 
-- Node.js 18+ (recommended)
-- npm 9+ (or compatible)
+- Node.js 18+
+- npm 9+
 
 ### Installation
 
-1. Clone the repository:
+```bash
+git clone https://github.com/Vansh281999/web_portfolio_v2.git
+cd web_portfolio_v2
+npm install
+```
 
-   ```bash
-   git clone <your-repository-url>
-   cd 3d-portfolio
-   ```
+### Development
 
-2. Install dependencies:
+```bash
+npm run dev
+```
 
-   ```bash
-   npm install
-   ```
+Opens at `http://localhost:5173`.
 
-3. Start the local development server:
+### Production Build
 
-   ```bash
-   npm run dev
-   ```
+```bash
+npm run build
+```
 
-4. Open the URL shown in the terminal (typically `http://localhost:5173`).
+Validates with TypeScript, bundles with Vite, and outputs to `dist/`.
 
-## Available Scripts
+### Preview Production Build
 
-- `npm run dev`  
-  Starts Vite dev server and exposes host for local network testing.
+```bash
+npm run preview
+```
 
-- `npm run build`  
-  Type-checks and builds a production-ready bundle.
+---
 
-- `npm run preview`  
-  Serves the production build locally for verification.
+# Performance
 
-- `npm run lint`  
-  Runs ESLint checks across the project.
+- **Vite + esbuild** — sub-second cold starts and optimized production bundles.
+- **DRACO Compression** — 3D model shipped as compressed + encrypted binary.
+- **Lazy Loading** — `React.lazy()` + `Suspense` for non-critical sections.
+- **Asset Hashing** — Static assets fingerprinted for long-term caching.
+- **N8AO** — Screen-space ambient occlusion rendered efficiently via post-processing.
 
-## GSAP License Note
+---
 
-This project uses the standard `gsap` package, including bonus plugins now available in the core package.
+# Design System
 
-- Install dependencies with `npm install`.
-- If migrating from older setups, remove `gsap-trial` from your project.
+| Element | Value |
+|---------|-------|
+| **Background** | `#0a0e17` (dark blue) |
+| **Accent** | `#5eead4` (teal/cyan) |
+| **Text** | `#eae5ec` (off-white) |
+| **Font** | Geist (Google Fonts) |
+| **Base unit** | `clamp()` + viewport-relative sizing |
 
-Read official installation guidance here: [GSAP Installation Docs](https://gsap.com/docs/v3/Installation/)
+- Breakpoints: `500px`, `768px`, `900px`, `1024px`, `1200px`, `1400px`, `1600px`, `1950px`
+- 3D canvas hidden below `1024px` to preserve mobile performance
+- CSS Micro-interactions via transitions + keyframes
+- Complex motion handled by GSAP timelines
 
-## Customization Guide
+---
 
-You can adapt this portfolio to your own profile by updating the following areas:
+# Customization
 
-- **Content sections**: Edit files in `src/components/` such as `About.tsx`, `Career.tsx`, `WhatIDo.tsx`, and `Work.tsx`.
-- **Data source**: Update static values in files under `src/data/`.
-- **Styling**: Modify component styles in `src/components/styles/` and global styles in `src/index.css` / `src/App.css`.
-- **3D scene behavior**: Adjust scene logic in `src/components/Character/` and related utilities.
-- **Animations**: Tweak GSAP utilities under `src/components/utils/`.
+<details>
+<summary>Edit personal content</summary>
 
-## Troubleshooting
+Update text and data directly in component files:
+- `src/components/Landing.tsx` — name, title, tagline
+- `src/components/About.tsx` — bio
+- `src/components/Career.tsx` — experience entries
+- `src/components/Work.tsx` — project cards
+- `src/data/boneData.ts` — animation bone names
 
-- **Blank screen in development**  
-  Check browser console for module import errors and verify all dependencies are installed.
+</details>
 
-- **3D performance issues on low-end devices**  
-  Reduce scene complexity and post-processing effects in the character/scene utilities.
+<details>
+<summary>Replace images and models</summary>
 
-- **GSAP plugin errors**  
-  Ensure you have the correct plugin package and license configuration for your target environment.
+- Images: swap files in `public/images/` and update refs in `TechStack.tsx` / `Work.tsx`.
+- 3D Model: replace `public/models/character.enc` (must match decrypt password in `src/components/Character/utils/decrypt.ts`).
+- Environment: replace `public/models/char_enviorment.hdr`.
 
-- **TypeScript build failures**  
-  Run `npm run build` and address reported type errors before deploying.
+</details>
 
-## Deployment
+<details>
+<summary>Change colors and theme</summary>
 
-1. Create a production build:
+Edit CSS variables in `src/index.css`:
+- `--accentColor`
+- `--backgroundColor`
 
-   ```bash
-   npm run build
-   ```
+</details>
 
-2. Validate locally:
+<details>
+<summary>Adjust 3D behavior</summary>
 
-   ```bash
-   npm run preview
-   ```
+- Scene logic: `src/components/Character/utils/`
+- Physics: `TechStack.tsx` — sphere count, collider size, pointer force
+- Animation timelines: `src/components/utils/GsapScroll.ts`
 
-3. Deploy the generated `dist/` folder to your hosting provider (for example Vercel, Netlify, or Cloudflare Pages).
+</details>
 
-## License
+---
 
-This project is open source and available under the [MIT License](LICENSE).
+# Deployment
+
+### GitHub Pages (Automatic)
+
+Push to `main` triggers `.github/workflows/deploy.yml` → deploys to:
+
+`https://vansh281999.github.io/web_portfolio_v2/`
+
+### Vercel / Netlify
+
+Import the repository and configure:
+- **Framework:** Vite
+- **Build Command:** `npm run build`
+- **Output Directory:** `dist`
+
+`vercel.json` and `netlify.toml` are included for SPA fallback routing.
+
+---
+
+# Roadmap
+
+- [ ] Sound effects on hover / interaction
+- [ ] Project detail modal instead of carousel
+- [ ] Dark / light theme toggle
+- [ ] Blog / writing section
+- [ ] Contact form with email integration
+- [ ] Reduced motion media query support
+- [ ] WebXR / VR preview mode
+
+---
+
+# Contributing
+
+This is a personal portfolio. Open an issue for bugs or suggestions.
+
+---
+
+# License
+
+[MIT](LICENSE)
+
+---
+
+# Contact
+
+<div align="center">
+
+[![GitHub](https://img.shields.io/badge/GitHub-Vansh281999-181717?logo=github)](https://github.com/Vansh281999)
+[![LinkedIn](https://img.shields.io/badge/LinkedIn-Connect-0a66c2?logo=linkedin)](https://linkedin.com/in/vansh281999)
+[![Portfolio](https://img.shields.io/badge/Portfolio-Live-5eead4?logo=globe)](https://vansh281999.github.io/web_portfolio_v2/)
+[![Email](https://img.shields.io/badge/Email-Contact-dc382d?logo=gmail)](mailto:your-email@example.com)
+
+</div>
