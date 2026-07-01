@@ -49,9 +49,12 @@ const Career = () => {
               <h3>2022–26</h3>
             </div>
             <p>
-              CGPA 8.75. Core Committee Member, Soft Computing Research
-              Society. Certified in MERN Full Stack (ETHNUS) and OCI 2025 AI
-              Foundations (Oracle).
+              Built a strong academic foundation in Computer Science and Engineering 
+              at Vellore Institute of Technology (2022–2026), achieving a CGPA of 
+              8.75. Complemented classroom learning with leadership as a Core 
+              Committee Member of the Soft Computing Research Society, industry-
+              recognized certifications, and practical experience through 
+              internships and real-world software projects.
             </p>
           </div>
         </div>
